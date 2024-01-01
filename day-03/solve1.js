@@ -1,27 +1,13 @@
 const { getInput } = require("../common");
-const { getSpecialChars } = require("./helpers");
+const { getSpecialChars, includesChar, numbersReducer, getLineCharArray } = require("./helpers");
 const input = "input.txt";
 
 const lines = getInput(input);
 
 const specialChars = getSpecialChars(lines);
-
-const isSymbol = (char) => {
-    return specialChars.includes(char);
-};
-
-const numbers = lines.reduce((acc, curr, index) => {
-    const re = /\d+/g;
-    let match;
-
-    while ((match = re.exec(curr)) !== null) {
-        acc.push({ data: match, line: index });
-    }
-
-    return acc;
-}, []);
-
-const lineCharArray = lines.map((line) => line.split(""));
+const isSymbol = includesChar(specialChars)
+const numbers = lines.reduce(numbersReducer, []);
+const lineCharArray = getLineCharArray(lines);
 
 const validNumbers = numbers.filter((number) => {
     const lineIndex = number.line;
