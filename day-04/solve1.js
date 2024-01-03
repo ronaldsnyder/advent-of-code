@@ -15,8 +15,6 @@ const drawings = lines.map((line) => {
     return drawing;
 })
 
-console.log(drawings[0])
-
 const solution = drawings.reduce((solution, drawing) => {
     const winners = drawing.entries.filter(i => drawing.winningNumbers.includes(i)).length;
 
