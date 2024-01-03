@@ -15,13 +15,21 @@ const drawings = lines.map((line) => {
     return drawing;
 })
 
-const solution = drawings.reduce((solution, drawing) => {
+
+let count = 0
+//an array of the number of cards that have won at each drawing
+const cardCount = new Array(drawings.length).fill(1)
+
+drawings.forEach((drawing, index)=> {
     const winners = drawing.entries.filter(i => drawing.winningNumbers.includes(i)).length;
+    const current = cardCount[index]
 
-    if(winners === 0) {
-        return solution;
+    //populate the winning cards for the next drawing
+    for(let j = index + 1; j < (index + winners + 1) && j < (drawings.length); j++){
+        cardCount[j] = cardCount[j] + current
     }
-    return solution += 2 ** (winners - 1)
-}, 0);
+    count = current + count
 
-console.log(solution);
+})
+
+console.log(count)
